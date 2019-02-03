@@ -13,7 +13,7 @@ export default {
   text: 'C#',
   code: `using System;
 
-namespace CodeLife
+namespace Codepad
 {
     class Program
     {

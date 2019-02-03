@@ -1,16 +1,16 @@
-# CodeLife
+# Codepad
 
 ## Run
 
 ```bash
 yarn
-yarn electron:serve
+yarn dev
 ```
 
 ## Build
 
 ```bash
-yarn electron:build
+yarn build
 ```
 
 ## Fix Code

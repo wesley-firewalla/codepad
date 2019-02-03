@@ -1,6 +1,6 @@
 import Dexie from 'dexie'
 
-const db = new Dexie('codelife')
+const db = new Dexie('codepad')
 db.version(1).stores({
   code_items: '++id,name,language,code,created_at,updated_at,deleted_at',
   life_items: '++id,name,key,created_at,updated_at,deleted_at'

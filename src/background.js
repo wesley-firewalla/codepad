@@ -16,8 +16,7 @@ protocol.registerStandardSchemes(['app'], {
 function createMainWindow() {
   const window = new BrowserWindow({
     minHeight: 400,
-    minWidth: 600,
-    titleBarStyle: 'hiddenInset'
+    minWidth: 600
   })
 
   if (isDevelopment) {

@@ -14,11 +14,11 @@
         {{ item.text }}
       </option>
     </select>
-    <span
+    <!-- <span
       class="icon icon-book pull-right"
       v-if="active_tab.language === 'go'"
       @click="showBook"
-    />
+    /> -->
   </div>
 </template>
 
@@ -50,7 +50,7 @@ export default {
     },
     play() {
       this.active_tab.is_running = true
-      const workDir = `/tmp/codelife/${this.active_tab.language}`
+      const workDir = `/tmp/codepad/${this.active_tab.language}`
       shell.mkdir('-p', workDir)
       this.languages
         .find(it => it.value === this.active_tab.language)
