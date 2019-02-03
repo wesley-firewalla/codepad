@@ -35,15 +35,8 @@ export default {
   name: 'CodeContentWorkbench',
   computed: {
     ...mapState('code', {
-      active_tab_name: state => state.active_tab_name
-    }),
-    active_tab: {
-      get() {
-        return this.$store.state.code.tabs.find(
-          it => it.name === this.active_tab_name
-        )
-      }
-    },
+      active_tab: state => state.active_tab
+    })
   },
   data() {
     return {

@@ -12,7 +12,7 @@
           class="code-editor"
           v-model="code"
           :options="editorOptions"
-          :language="language"
+          :language="active_tab.language"
         />
       </div>
       <multipane-resizer />
@@ -43,31 +43,18 @@ export default {
   },
   computed: {
     ...mapState('code', {
-      active_tab_name: state => state.active_tab_name
+      active_tab: state => state.active_tab
     }),
     code: {
       get() {
-        const tab = this.$store.state.code.tabs.find(
-          it => it.name === this.active_tab_name
-        )
-        return tab.code
+        return this.active_tab.code
       },
       set(value) {
-        const tab = this.$store.state.code.tabs.find(
-          it => it.name === this.active_tab_name
-        )
+        const tab = this.active_tab
         tab.code = value
         if (tab.is_preview && tab.origin !== tab.code) {
           tab.is_preview = false
         }
-      }
-    },
-    language: {
-      get() {
-        const tab = this.$store.state.code.tabs.find(
-          it => it.name === this.active_tab_name
-        )
-        return tab.language
       }
     }
   },

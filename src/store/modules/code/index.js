@@ -5,7 +5,6 @@ export default {
   namespaced: true,
   state: {
     tabs: [],
-    active_tab_name: '',
     active_tab: null,
     items: [],
     filter: {

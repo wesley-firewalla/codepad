@@ -17,10 +17,9 @@
           :label="item.title"
           :name="item.name"
         >
-          <code-content @on-save="onSave" />
         </el-tab-pane>
       </el-tabs>
-      <code-save-name ref="savePrompt" />
+      <code-content @on-save="onSave" />
     </div>
   </multipane>
 </template>
@@ -30,7 +29,6 @@ import { mapState, mapActions } from 'vuex'
 import { Multipane, MultipaneResizer } from '@/components/MultiPane'
 import CodeContent from '@/components/CodeContent.vue'
 import CodeSidebar from '@/components/CodeSidebar.vue'
-import CodeSaveName from '@/components/CodeSaveName.vue'
 import Mousetrap from 'mousetrap'
 import languages from '@/lib/languages'
 
@@ -57,8 +55,7 @@ export default {
     Multipane,
     MultipaneResizer,
     CodeContent,
-    CodeSidebar,
-    CodeSaveName
+    CodeSidebar
   },
   computed: {
     ...mapState('code', {
@@ -67,10 +64,10 @@ export default {
     }),
     active_tab_name: {
       get() {
-        return this.$store.state.code.active_tab_name
+        return this.active_tab.name
       },
       set(value) {
-        this.$store.state.code.active_tab_name = value
+        this.$store.state.code.active_tab = this.tabs.find(it => it.name === value)
       }
     }
   },
@@ -96,10 +93,10 @@ export default {
     removeTab(targetName) {
       const index = this.tabs.findIndex(it => it.name === targetName)
       const closingTab = this.tabs[index]
-      if (closingTab.name === this.active_tab_name) {
+      if (closingTab.name === this.active_tab.name) {
         if (this.tabs.length > 1) {
           const prevTab = this.tabs[index === 0 ? index + 1 : index - 1]
-          this.active_tab_name = prevTab.name
+          this.active_tab.name = prevTab.name
         }
       }
 
@@ -112,7 +109,15 @@ export default {
       if (this.active_tab.item_id) {
         this.saveActiveTab()
       } else {
-        this.$refs.savePrompt.show()
+        this.$prompt('', 'Save As', {
+          confirmButtonText: 'Save',
+          cancelButtonText: 'Cancel',
+          inputValue: 'Untitled',
+          inputPattern: /.+/,
+          inputErrorMessage: 'Required'
+        }).then(({ value }) => {
+          this.saveActiveTab(value)
+        })
       }
     },
     initShortcuts() {

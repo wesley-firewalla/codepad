@@ -48,27 +48,29 @@ export default {
     let tab = state.tabs.find(it => it.item_id === item.id)
     if (tab) {
       tab.is_preview = false
-      commit('setActiveTab', tab)
+      state.active_tab = tab
     } else {
       tab = createTab()
       setTabByItem(tab, item)
-      commit('addTab', tab)
+      state.tabs.push(tab)
+      state.active_tab = tab
     }
   },
   previewItemInTab({ commit, state }, item) {
     let tab = state.tabs.find(it => it.item_id === item.id)
     if (tab) {
-      commit('setActiveTab', tab)
+      state.active_tab = tab
     } else {
       tab = state.tabs.find(it => it.is_preview)
       if (tab) {
         setTabByItem(tab, item)
-        commit('setActiveTab', tab)
+        state.active_tab = tab
       } else {
         tab = createTab()
         setTabByItem(tab, item)
         tab.is_preview = true
-        commit('addTab', tab)
+        state.tabs.push(tab)
+        state.active_tab = tab
       }
     }
   },
