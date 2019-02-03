@@ -1,0 +1,40 @@
+{
+  "name": "codelife",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Make life simple!",
+  "author": "Wenbin Ke",
+  "scripts": {
+    "dev": "vue-cli-service electron:serve",
+    "build": "vue-cli-service electron:build",
+    "lint": "vue-cli-service lint",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "dependencies": {
+    "dexie": "^2.0.4",
+    "element-ui": "^2.5.1",
+    "fs-extra": "^7.0.1",
+    "github-markdown-css": "^2.10.0",
+    "lodash": "^4.17.11",
+    "markdown": "^0.5.0",
+    "moment": "^2.24.0",
+    "monaco-editor": "^0.15.6",
+    "mousetrap": "^1.6.2",
+    "shelljs": "^0.8.3",
+    "vue": "^2.5.22",
+    "vue-router": "^3.0.2",
+    "vuex": "^3.1.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-eslint": "^3.3.0",
+    "@vue/cli-plugin-pwa": "^3.3.0",
+    "@vue/cli-service": "^3.3.1",
+    "@vue/eslint-config-prettier": "^4.0.1",
+    "electron": "^4.0.2",
+    "node-sass": "^4.11.0",
+    "sass-loader": "^7.1.0",
+    "vue-cli-plugin-electron-builder": "^1.0.0-rc.10",
+    "vue-template-compiler": "^2.5.22"
+  },
+  "main": "background.js"
+}
