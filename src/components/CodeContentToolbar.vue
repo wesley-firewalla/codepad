@@ -71,7 +71,7 @@ export default {
 <style lang="scss" scoped>
 .top-toolbar {
   flex-wrap: nowrap;
-  padding: 0.75rem;
+  padding: 0 0.75rem 0.75rem 0.75rem;
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
 .label-language {

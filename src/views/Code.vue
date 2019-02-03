@@ -105,8 +105,8 @@ export default {
 
       this.tabs.splice(index, 1)
     },
-    clickTab(targetName) {
-      this.active_tab_name = targetName
+    clickTab(tab) {
+      this.active_tab_name = tab.name
     },
     onSave() {
       if (this.active_tab.item_id) {
