@@ -1,6 +1,4 @@
 import { app, protocol, BrowserWindow, Menu } from 'electron'
-import * as path from 'path'
-import { format as formatUrl } from 'url'
 import createProtocol from 'vue-cli-plugin-electron-builder/lib/createProtocol.js'
 
 const isDevelopment = process.env.NODE_ENV !== 'production'
@@ -26,13 +24,7 @@ function createMainWindow() {
   } else {
     createProtocol('app')
     //   Load the index.html when not in development
-    window.loadURL(
-      formatUrl({
-        pathname: path.join(__dirname, 'index.html'),
-        protocol: 'file',
-        slashes: true
-      })
-    )
+    window.loadFile('index.html')
   }
 
   window.webContents.on('did-finish-load', () => {
