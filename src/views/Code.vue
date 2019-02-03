@@ -3,8 +3,23 @@
     <div class="sidebar"><code-sidebar /></div>
     <multipane-resizer />
     <div class="main-content">
-      <code-tabs />
-      <code-content @on-save="onSave" />
+      <el-tabs
+        v-model="active_tab_name"
+        type="card"
+        editable
+        @tab-add="addTab"
+        @tab-remove="removeTab"
+        @tab-click="clickTab"
+      >
+        <el-tab-pane
+          :key="item.name"
+          v-for="item in tabs"
+          :label="item.title"
+          :name="item.name"
+        >
+          <code-content @on-save="onSave" />
+        </el-tab-pane>
+      </el-tabs>
       <code-save-name ref="savePrompt" />
     </div>
   </multipane>
@@ -14,10 +29,27 @@
 import { mapState, mapActions } from 'vuex'
 import { Multipane, MultipaneResizer } from '@/components/MultiPane'
 import CodeContent from '@/components/CodeContent.vue'
-import CodeTabs from '@/components/CodeTabs.vue'
 import CodeSidebar from '@/components/CodeSidebar.vue'
 import CodeSaveName from '@/components/CodeSaveName.vue'
 import Mousetrap from 'mousetrap'
+import languages from '@/lib/languages'
+
+const createTab = () => {
+  const language = languages[0]
+  return {
+    name: Date.now().toString(),
+    item_id: null,
+    title: 'Untitled',
+    output: '',
+    command: '',
+    active_panel: 'output',
+    is_running: false,
+    language: language.value,
+    origin: '',
+    code: language.code,
+    is_preview: false
+  }
+}
 
 export default {
   name: 'Code',
@@ -26,18 +58,25 @@ export default {
     MultipaneResizer,
     CodeContent,
     CodeSidebar,
-    CodeSaveName,
-    CodeTabs
+    CodeSaveName
   },
   computed: {
     ...mapState('code', {
       tabs: state => state.tabs,
       active_tab: state => state.active_tab
-    })
+    }),
+    active_tab_name: {
+      get() {
+        return this.$store.state.code.active_tab_name
+      },
+      set(value) {
+        this.$store.state.code.active_tab_name = value
+      }
+    }
   },
   created() {
     if (this.tabs.length === 0) {
-      this.newTab()
+      this.addTab()
     }
     this.fetchItems()
     this.initShortcuts()
@@ -48,12 +87,27 @@ export default {
     Mousetrap.unbind('command+w')
   },
   methods: {
-    ...mapActions('code', [
-      'fetchItems',
-      'newTab',
-      'closeActiveTab',
-      'saveActiveTab'
-    ]),
+    ...mapActions('code', ['fetchItems', 'saveActiveTab']),
+    addTab() {
+      const tab = createTab()
+      this.tabs.push(tab)
+      this.active_tab_name = tab.name
+    },
+    removeTab(targetName) {
+      const index = this.tabs.findIndex(it => it.name === targetName)
+      const closingTab = this.tabs[index]
+      if (closingTab.name === this.active_tab_name) {
+        if (this.tabs.length > 1) {
+          const prevTab = this.tabs[index === 0 ? index + 1 : index - 1]
+          this.active_tab_name = prevTab.name
+        }
+      }
+
+      this.tabs.splice(index, 1)
+    },
+    clickTab(targetName) {
+      this.active_tab_name = targetName
+    },
     onSave() {
       if (this.active_tab.item_id) {
         this.saveActiveTab()
@@ -66,10 +120,10 @@ export default {
         this.onSave()
       })
       Mousetrap.bind('command+t', () => {
-        this.newTab()
+        this.addTab()
       })
       Mousetrap.bind('command+w', () => {
-        this.closeActiveTab()
+        this.removeTab(this.active_tab_name)
       })
     }
   }

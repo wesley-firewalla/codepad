@@ -30,16 +30,5 @@ export default {
       tab.language = item.language
       tab.code = item.code
     }
-  },
-  // Tabs
-  setActiveTab(state, tab) {
-    state.active_tab = tab
-  },
-  addTab(state, tab) {
-    state.tabs.push(tab)
-    state.active_tab = tab
-  },
-  removeTab(state, index) {
-    state.tabs.splice(index, 1)
   }
 }

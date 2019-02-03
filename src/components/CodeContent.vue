@@ -10,9 +10,9 @@
         <monaco-editor
           ref="editor"
           class="code-editor"
-          v-model="active_tab.code"
+          v-model="code"
           :options="editorOptions"
-          :language="active_tab.language"
+          :language="language"
         />
       </div>
       <multipane-resizer />
@@ -43,8 +43,33 @@ export default {
   },
   computed: {
     ...mapState('code', {
-      active_tab: state => state.active_tab
-    })
+      active_tab_name: state => state.active_tab_name
+    }),
+    code: {
+      get() {
+        const tab = this.$store.state.code.tabs.find(
+          it => it.name === this.active_tab_name
+        )
+        return tab.code
+      },
+      set(value) {
+        const tab = this.$store.state.code.tabs.find(
+          it => it.name === this.active_tab_name
+        )
+        tab.code = value
+        if (tab.is_preview && tab.origin !== tab.code) {
+          tab.is_preview = false
+        }
+      }
+    },
+    language: {
+      get() {
+        const tab = this.$store.state.code.tabs.find(
+          it => it.name === this.active_tab_name
+        )
+        return tab.language
+      }
+    }
   },
   data() {
     return {
@@ -60,14 +85,6 @@ export default {
     this.editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.KEY_S, () => {
       this.$emit('on-save')
     })
-  },
-  watch: {
-    ['active_tab.code']() {
-      const tab = this.active_tab
-      if (tab.is_preview && tab.origin !== tab.code) {
-        tab.is_preview = false
-      }
-    }
   },
   methods: {
     vertialPaneResize() {

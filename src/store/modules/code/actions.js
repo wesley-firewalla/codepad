@@ -5,9 +5,9 @@ import _ from 'lodash'
 const createTab = () => {
   const language = languages[0]
   return {
-    id: Date.now(),
+    name: Date.now().toString(),
     item_id: null,
-    name: 'Untitled',
+    title: 'Untitled',
     output: '',
     command: '',
     active_panel: 'output',
@@ -44,9 +44,6 @@ export default {
     await itemService.update(id, item)
     commit('updateItem', await itemService.findById(id))
   },
-  newTab({ commit }) {
-    commit('addTab', createTab())
-  },
   viewItemInTab({ commit, state }, item) {
     let tab = state.tabs.find(it => it.item_id === item.id)
     if (tab) {
@@ -75,21 +72,6 @@ export default {
       }
     }
   },
-  closeTab({ commit, state }, index) {
-    if (state.tabs.length === 0) {
-      return
-    }
-    const tab = state.tabs[index]
-    if (tab.id === state.active_tab.id) {
-      commit('setActiveTab', state.tabs[index === 0 ? index + 1 : index - 1])
-    }
-
-    commit('removeTab', index)
-  },
-  closeActiveTab({ dispatch, state }) {
-    const index = state.tabs.findIndex(it => it.id === state.active_tab.id)
-    dispatch('closeTab', index)
-  },
   async saveTab({ commit }, tab) {
     tab.origin = tab.code
     if (tab.item_id) {
@@ -106,8 +88,5 @@ export default {
     }
 
     await dispatch('saveTab', state.active_tab)
-  },
-  activateTab({ commit }, tab) {
-    commit('setActiveTab', tab)
   }
 }
