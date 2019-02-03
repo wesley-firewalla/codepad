@@ -10,6 +10,7 @@
         @tab-add="addTab"
         @tab-remove="removeTab"
         @tab-click="clickTab"
+        class="top-tabs"
       >
         <el-tab-pane
           :key="item.name"
@@ -67,7 +68,9 @@ export default {
         return this.active_tab.name
       },
       set(value) {
-        this.$store.state.code.active_tab = this.tabs.find(it => it.name === value)
+        this.$store.state.code.active_tab = this.tabs.find(
+          it => it.name === value
+        )
       }
     }
   },

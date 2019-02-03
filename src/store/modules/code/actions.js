@@ -44,7 +44,7 @@ export default {
     await itemService.update(id, item)
     commit('updateItem', await itemService.findById(id))
   },
-  viewItemInTab({ commit, state }, item) {
+  viewItemInTab({ state }, item) {
     let tab = state.tabs.find(it => it.item_id === item.id)
     if (tab) {
       tab.is_preview = false
@@ -56,7 +56,7 @@ export default {
       state.active_tab = tab
     }
   },
-  previewItemInTab({ commit, state }, item) {
+  previewItemInTab({ state }, item) {
     let tab = state.tabs.find(it => it.item_id === item.id)
     if (tab) {
       state.active_tab = tab

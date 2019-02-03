@@ -174,7 +174,6 @@ export default {
   width: 100%;
   height: 8px;
   cursor: row-resize;
-  border-top: 1px solid #ddd;
 }
 
 .layout-h > .multipane-resizer {
@@ -183,6 +182,6 @@ export default {
   margin-left: -7px;
   left: 0;
   cursor: col-resize;
-  border-right: 1px solid #ddd;
+  border-right: 1px solid #dcdfe6;
 }
 </style>
