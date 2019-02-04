@@ -14,18 +14,18 @@
           :key="item.id"
         >
           <template v-if="editing_item_id !== item.id">
-            <div class="name">{{ item.name }}</div>
+            <div class="title">{{ item.title }}</div>
             <div class="time">{{ item.updated_at | localTime }}</div>
           </template>
           <input
             type="text"
             class="input-item form-control"
-            :value="item.name"
+            :value="item.title"
             v-else
             :ref="'input_item_' + item.id"
             @focus="$event.target.select()"
-            @keypress.enter="saveName(item, $event)"
-            @blur="saveName(item, $event)"
+            @keypress.enter="saveTitle(item, $event)"
+            @blur="saveTitle(item, $event)"
           />
         </li>
       </ul>
@@ -107,16 +107,16 @@ export default {
         }
       ])
     },
-    saveName(item, e) {
-      let name = e.target.value
-      if (name === '') {
-        name = item.name
+    saveTitle(item, e) {
+      let title = e.target.value
+      if (title === '') {
+        title = item.title
       }
 
       this.editing_item_id = null
       this.updateItem({
         id: item.id,
-        name: name
+        title
       })
     }
   }

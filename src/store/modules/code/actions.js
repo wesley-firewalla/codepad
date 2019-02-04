@@ -84,9 +84,9 @@ export default {
       commit('insertItem', await itemService.findById(tab.item_id))
     }
   },
-  async saveActiveTab({ dispatch, state }, name) {
-    if (!_.isUndefined(name)) {
-      state.active_tab.name = name
+  async saveActiveTab({ dispatch, state }, title) {
+    if (!_.isUndefined(title)) {
+      state.active_tab.title = title
     }
 
     await dispatch('saveTab', state.active_tab)

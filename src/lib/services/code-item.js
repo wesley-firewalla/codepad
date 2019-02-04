@@ -28,7 +28,7 @@ export default {
     return await db.code_items.delete(id)
   },
   async update(id, data) {
-    const updates = _.pick(data, ['name', 'language', 'code'])
+    const updates = _.pick(data, ['title', 'language', 'code'])
     updates.updated_at = moment()
       .utc()
       .format()
@@ -38,7 +38,7 @@ export default {
     return await db.code_items.get(id)
   },
   async create(data) {
-    const insert = _.pick(data, ['name', 'language', 'code'])
+    const insert = _.pick(data, ['title', 'language', 'code'])
     insert.created_at = insert.updated_at = moment()
       .utc()
       .format()
