@@ -1,8 +1,15 @@
 <template>
   <div class="top-toolbar">
-    <el-button type="primary" @click="play" size="mini">
-      <span class="icon icon-play" title="Run" v-if="!active_tab.is_running" />
-      <span class="icon icon-stop" title="Stop" v-else />
+    <el-button
+      type="primary"
+      @click="play"
+      size="mini"
+      v-if="!active_tab.is_running"
+    >
+      Run
+    </el-button>
+    <el-button v-else type="info" size="mini" disabled>
+      Running
     </el-button>
     <label class="label-language">Language</label>
     <el-select v-model="language" placeholder="请选择" size="mini">

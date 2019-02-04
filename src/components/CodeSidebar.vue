@@ -1,12 +1,7 @@
 <template>
   <div>
     <div class="list-group-header">
-      <input
-        class="form-control"
-        type="text"
-        v-model="filter.q"
-        placeholder="Filter"
-      />
+      <el-input v-model="filter.q" size="small" placeholder="Filter"></el-input>
     </div>
     <div style="overflow: auto;height: calc(100vh - 93px);">
       <ul class="list-group">
