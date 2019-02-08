@@ -51,7 +51,6 @@ export default {
 
 <style lang="scss" scoped>
 .execute-result {
-  padding: 0.5rem 0.75rem;
   white-space: pre-wrap;
   overflow: auto;
   height: calc(100% - 32px);
