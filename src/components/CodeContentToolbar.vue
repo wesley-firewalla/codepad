@@ -12,7 +12,7 @@
       Running
     </el-button>
     <label class="label-language">Language</label>
-    <el-select v-model="language" placeholder="请选择" size="mini">
+    <el-select v-model="language" placeholder="Choose Language" size="mini">
       <el-option
         v-for="item in languages"
         :key="item.value"
