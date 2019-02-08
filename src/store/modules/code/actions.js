@@ -27,17 +27,20 @@ const setTabByItem = (tab, item) => {
 }
 
 export default {
-  async fetchItems({ commit, state }) {
+  async fetchItems({ state }) {
     const items = await itemService.findAll(state.filter)
     if (state.filter.offset === 0) {
-      commit('setItems', items)
+      state.items = items
     } else {
-      commit('addItems', items)
+      for (let item of items) {
+        state.items.push(item)
+      }
     }
   },
-  async deleteItem({ commit }, id) {
+  async deleteItem({ state }, id) {
     await itemService.deleteById(id)
-    commit('deleteItem', id)
+    const index = state.items.findIndex(it => it.id === id)
+    state.items.splice(index, 1)
   },
   async updateItem({ commit }, item) {
     const id = item.id
@@ -74,14 +77,24 @@ export default {
       }
     }
   },
-  async saveTab({ commit }, tab) {
+  async saveTab({ state }, tab) {
     tab.origin = tab.code
     if (tab.item_id) {
       await itemService.update(tab.item_id, tab)
-      commit('updateItem', await itemService.findById(tab.item_id))
+      const item = await itemService.findById(tab.item_id)
+      const sItem = state.items.find(it => it.id === item.id)
+      _.assign(sItem, item)
+
+      const tab = state.tabs.find(it => it.item_id === item.id)
+      if (tab) {
+        tab.name = item.name
+        tab.language = item.language
+        tab.code = item.code
+      }
     } else {
       tab.item_id = await itemService.create(tab)
-      commit('insertItem', await itemService.findById(tab.item_id))
+      const item = await itemService.findById(tab.item_id)
+      state.items.splice(0, 0, item)
     }
   },
   async saveActiveTab({ dispatch, state }, title) {
