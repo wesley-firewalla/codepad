@@ -37,7 +37,7 @@ const createTab = () => {
   const language = languages[0]
   return {
     name: Date.now().toString(),
-    item_id: null,
+    id: null,
     title: 'Untitled',
     output: '',
     command: '',
@@ -109,7 +109,7 @@ export default {
       this.active_tab_name = tab.name
     },
     onSave() {
-      if (this.active_tab.item_id) {
+      if (this.active_tab.id) {
         this.saveActiveTab()
       } else {
         this.$prompt('', 'Save As', {

@@ -8,12 +8,12 @@
         <li
           class="list-group-item"
           v-for="item in items"
-          :class="{ active: item.id === active_tab.item_id }"
+          :class="{ active: item.id === active_tab.id }"
           @click.prevent="itemClick(item)"
           @contextmenu.prevent="showMenu(item)"
           :key="item.id"
         >
-          <template v-if="editing_item_id !== item.id">
+          <template v-if="editing_id !== item.id">
             <div class="title">{{ item.title }}</div>
             <div class="time">{{ item.updated_at | localTime }}</div>
           </template>
@@ -49,7 +49,7 @@ export default {
   },
   data() {
     return {
-      editing_item_id: null,
+      editing_id: null,
       item_clicks: {},
       item_click_timers: {}
     }
@@ -71,7 +71,7 @@ export default {
       'updateItem'
     ]),
     itemClick(item) {
-      if (item.id === this.editing_item_id) {
+      if (item.id === this.editing_id) {
         return
       }
       this.item_clicks[item.id] = (this.item_clicks[item.id] || 0) + 1
@@ -92,7 +92,7 @@ export default {
         {
           label: 'Rename',
           click: () => {
-            this.editing_item_id = item.id
+            this.editing_id = item.id
             this.$nextTick(() => {
               this.$refs['input_item_' + item.id][0].focus()
             })
@@ -113,7 +113,7 @@ export default {
         title = item.title
       }
 
-      this.editing_item_id = null
+      this.editing_id = null
       this.updateItem({
         id: item.id,
         title

@@ -29,7 +29,6 @@ import { Multipane, MultipaneResizer } from '@/components/MultiPane'
 import CodeContentToolbar from '@/components/CodeContentToolbar.vue'
 import CodeContentWorkbench from '@/components/CodeContentWorkbench.vue'
 import MonacoEditor from '@/components/MonacoEditor'
-import languages from '@/lib/languages'
 import * as monaco from 'monaco-editor'
 
 export default {
@@ -63,8 +62,7 @@ export default {
       editor: null,
       editorOptions: {
         automaticLayout: true
-      },
-      languages
+      }
     }
   },
   mounted() {

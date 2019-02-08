@@ -6,7 +6,7 @@ const createTab = () => {
   const language = languages[0]
   return {
     name: Date.now().toString(),
-    item_id: null,
+    id: null,
     title: 'Untitled',
     output: '',
     command: '',
@@ -20,7 +20,7 @@ const createTab = () => {
 }
 
 const setTabByItem = (tab, item) => {
-  tab.item_id = item.id
+  tab.id = item.id
   tab.name = item.name
   tab.origin = tab.code = item.code
   tab.language = item.language
@@ -48,7 +48,7 @@ export default {
     commit('updateItem', await itemService.findById(id))
   },
   viewItemInTab({ state }, item) {
-    let tab = state.tabs.find(it => it.item_id === item.id)
+    let tab = state.tabs.find(it => it.id === item.id)
     if (tab) {
       tab.is_preview = false
       state.active_tab = tab
@@ -60,7 +60,7 @@ export default {
     }
   },
   previewItemInTab({ state }, item) {
-    let tab = state.tabs.find(it => it.item_id === item.id)
+    let tab = state.tabs.find(it => it.id === item.id)
     if (tab) {
       state.active_tab = tab
     } else {
@@ -79,21 +79,21 @@ export default {
   },
   async saveTab({ state }, tab) {
     tab.origin = tab.code
-    if (tab.item_id) {
-      await itemService.update(tab.item_id, tab)
-      const item = await itemService.findById(tab.item_id)
+    if (tab.id) {
+      await itemService.update(tab.id, tab)
+      const item = await itemService.findById(tab.id)
       const sItem = state.items.find(it => it.id === item.id)
       _.assign(sItem, item)
 
-      const tab = state.tabs.find(it => it.item_id === item.id)
+      const tab = state.tabs.find(it => it.id === item.id)
       if (tab) {
         tab.name = item.name
         tab.language = item.language
         tab.code = item.code
       }
     } else {
-      tab.item_id = await itemService.create(tab)
-      const item = await itemService.findById(tab.item_id)
+      tab.id = await itemService.create(tab)
+      const item = await itemService.findById(tab.id)
       state.items.splice(0, 0, item)
     }
   },
