@@ -42,10 +42,13 @@ export default {
     const index = state.items.findIndex(it => it.id === id)
     state.items.splice(index, 1)
   },
-  async updateItem({ commit }, item) {
+  async updateItem({ state }, item) {
     const id = item.id
     await itemService.update(id, item)
-    commit('updateItem', await itemService.findById(id))
+
+    item = await itemService.findById(id)
+    const sItem = state.items.find(it => it.id === id)
+    _.assign(sItem, item)
   },
   viewItemInTab({ state }, item) {
     let tab = state.tabs.find(it => it.id === item.id)
