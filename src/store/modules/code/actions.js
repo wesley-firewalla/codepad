@@ -5,8 +5,8 @@ import _ from 'lodash'
 const createTab = () => {
   const language = languages[0]
   return {
-    name: Date.now().toString(),
     id: null,
+    name: Date.now().toString(),
     title: 'Untitled',
     output: '',
     command: '',
@@ -21,7 +21,7 @@ const createTab = () => {
 
 const setTabByItem = (tab, item) => {
   tab.id = item.id
-  tab.name = item.name
+  tab.title = item.title
   tab.origin = tab.code = item.code
   tab.language = item.language
 }
