@@ -106,5 +106,12 @@ export default {
     }
 
     await dispatch('saveTab', state.active_tab)
+  },
+  setActiveTabCode({ state }, code) {
+    const tab = state.active_tab
+    state.active_tab.code = code
+    if (tab.is_preview && tab.origin !== code) {
+      state.active_tab.is_preview = false
+    }
   }
 }

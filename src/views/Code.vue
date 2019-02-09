@@ -12,12 +12,16 @@
         @tab-click="clickTab"
         class="top-tabs"
       >
-        <el-tab-pane
-          :key="item.name"
-          v-for="item in tabs"
-          :label="item.title"
-          :name="item.name"
-        >
+        <el-tab-pane :key="item.name" v-for="item in tabs" :name="item.name">
+          <span slot="label">
+            <template v-if="item.is_preview"
+              ><i>{{ item.title }}</i></template
+            >
+            <template v-else-if="item.origin !== item.code"
+              >{{ item.title }} *</template
+            >
+            <template v-else>{{ item.title }}</template>
+          </span>
         </el-tab-pane>
       </el-tabs>
       <code-content @on-save="onSave" />

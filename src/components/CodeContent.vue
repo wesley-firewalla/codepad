@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState, mapActions } from 'vuex'
 import { Multipane, MultipaneResizer } from '@/components/MultiPane'
 import CodeContentToolbar from '@/components/CodeContentToolbar.vue'
 import CodeContentWorkbench from '@/components/CodeContentWorkbench.vue'
@@ -49,11 +49,10 @@ export default {
         return this.active_tab.code
       },
       set(value) {
-        const tab = this.active_tab
-        tab.code = value
-        if (tab.is_preview && tab.origin !== tab.code) {
-          tab.is_preview = false
-        }
+        this.setActiveTabCode(value)
+        this.$nextTick(() => {
+          this.$forceUpdate()
+        })
       }
     }
   },
@@ -72,6 +71,7 @@ export default {
     })
   },
   methods: {
+    ...mapActions('code', ['setActiveTabCode']),
     vertialPaneResize() {
       this.editor.layout()
     }
