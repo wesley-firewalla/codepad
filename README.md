@@ -1,4 +1,4 @@
-# Codepad
+# CodePad
 
 ## Run
 

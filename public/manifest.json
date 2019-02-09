@@ -1,6 +1,6 @@
 {
-  "name": "Codepad",
-  "short_name": "Codepad",
+  "name": "CodePad",
+  "short_name": "CodePad",
   "icons": [
     {
       "src": "../icon.png",
