@@ -173,6 +173,7 @@ export default {
 .layout-v > .multipane-resizer {
   width: 100%;
   height: 8px;
+  margin-bottom: -8px;
   cursor: row-resize;
 }
 

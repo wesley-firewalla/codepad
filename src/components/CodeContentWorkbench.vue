@@ -1,25 +1,25 @@
 <template>
-  <div>
-    <el-tabs v-model="active_panel" type="border-card">
+  <div style="height: 100%">
+    <el-tabs v-model="active_panel" type="border-card" class="workbench-tabs">
       <el-tab-pane
         :key="item"
         v-for="item in panels"
-        :label="item"
+        :label="item.toUpperCase()"
         :name="item"
       >
-        <div class="execute-result can-select">
-          <div
-            class="can-select"
-            :class="{ 'markdown-body': active_tab.language === 'markdown' }"
-            v-if="active_tab.active_panel === 'output'"
-            v-html="active_tab.output"
-          />
-          <template v-if="active_tab.active_panel === 'debug'">{{
-            active_tab.command
-          }}</template>
-        </div>
       </el-tab-pane>
     </el-tabs>
+    <div class="execute-result can-select">
+      <div
+        class="can-select"
+        :class="{ 'markdown-body': active_tab.language === 'markdown' }"
+        v-if="active_tab.active_panel === 'output'"
+        v-html="active_tab.output"
+      ></div>
+      <template v-if="active_tab.active_panel === 'debug'">{{
+        active_tab.command
+      }}</template>
+    </div>
   </div>
 </template>
 
@@ -53,7 +53,8 @@ export default {
 .execute-result {
   white-space: pre-wrap;
   overflow: auto;
-  height: calc(100% - 32px);
+  padding: 15px;
+  height: calc(100% - 40px);
 }
 .el-tabs--border-card {
   border-left: none;
