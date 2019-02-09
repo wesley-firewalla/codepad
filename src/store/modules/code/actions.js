@@ -49,6 +49,16 @@ export default {
     item = await itemService.findById(id)
     const sItem = state.items.find(it => it.id === id)
     _.assign(sItem, item)
+
+    let tab = state.tabs.find(it => it.id === id)
+    if (tab) {
+      tab.title = item.title
+    }
+
+    tab = state.active_tab
+    if (tab.id === id) {
+      tab.title = item.title
+    }
   },
   viewItemInTab({ state }, item) {
     let tab = state.tabs.find(it => it.id === item.id)

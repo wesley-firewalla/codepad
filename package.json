@@ -31,8 +31,11 @@
     "electron": "^4.0.4",
     "node-sass": "^4.11.0",
     "sass-loader": "^7.1.0",
-    "vue-cli-plugin-electron-builder": "^1.0.0-rc.10",
-    "vue-template-compiler": "^2.5.22"
+    "vue-cli-plugin-electron-builder": "^1.0.0-rc.11",
+    "vue-template-compiler": "^2.6.4"
+  },
+  "resolutions": {
+    "terser": "3.14.1"
   },
   "main": "background.js"
 }

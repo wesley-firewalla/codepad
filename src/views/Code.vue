@@ -21,7 +21,7 @@
         >
         </el-tab-pane>
       </el-tabs>
-      <code-content @on-save="onSave" @on-code-change="onCodeChange" />
+      <code-content @on-save="onSave" />
     </div>
   </multipane>
 </template>
@@ -134,11 +134,6 @@ export default {
           this.saveActiveTab(value)
         })
       }
-    },
-    onCodeChange() {
-      this.$nextTick(() => {
-        this.$refs.tabs.$forceUpdate()
-      })
     },
     initShortcuts() {
       Mousetrap.bind('command+s', () => {
