@@ -50,7 +50,7 @@ export default {
       },
       set(value) {
         this.setActiveTabCode(value)
-        this.$emit('test', 'hi')
+        this.$emit('on-code-change')
       }
     }
   },

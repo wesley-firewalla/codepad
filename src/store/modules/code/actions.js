@@ -87,6 +87,7 @@ export default {
     }
 
     tab.origin = tab.code
+    tab.is_preview = false
     if (tab.id) {
       await itemService.update(tab.id, tab)
       const item = await itemService.findById(tab.id)

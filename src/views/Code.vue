@@ -6,25 +6,22 @@
       <el-tabs
         v-model="active_tab_name"
         type="card"
+        ref="tabs"
         editable
         @tab-add="addTab"
         @tab-remove="removeTab"
         @tab-click="clickTab"
         class="top-tabs"
       >
-        <el-tab-pane :key="item.name" v-for="item in tabs" :name="item.name">
-          <span slot="label">
-            <template v-if="item.is_preview"
-              ><i>{{ item.title }}</i></template
-            >
-            <template v-else-if="item.origin !== item.code"
-              >{{ item.title }} *</template
-            >
-            <template v-else>{{ item.title }}</template>
-          </span>
+        <el-tab-pane
+          :key="item.name"
+          v-for="item in tabs"
+          :label="getLabel(item)"
+          :name="item.name"
+        >
         </el-tab-pane>
       </el-tabs>
-      <code-content @on-save="onSave" />
+      <code-content @on-save="onSave" @on-code-change="onCodeChange" />
     </div>
   </multipane>
 </template>
@@ -84,10 +81,6 @@ export default {
     }
     this.fetchItems()
     this.initShortcuts()
-
-    this.$on('test', function(msg) {
-      console.log(msg)
-    })
   },
   destroyed() {
     Mousetrap.unbind('command+s')
@@ -116,6 +109,17 @@ export default {
     clickTab(tab) {
       this.active_tab_name = tab.name
     },
+    getLabel(item) {
+      if (item.is_preview) {
+        return item.title + ' (preview)'
+      }
+
+      if (item.origin && item.origin !== item.code) {
+        return item.title + '*'
+      }
+
+      return item.title
+    },
     onSave() {
       if (this.active_tab.id) {
         this.saveActiveTab()
@@ -130,6 +134,11 @@ export default {
           this.saveActiveTab(value)
         })
       }
+    },
+    onCodeChange() {
+      this.$nextTick(() => {
+        this.$refs.tabs.$forceUpdate()
+      })
     },
     initShortcuts() {
       Mousetrap.bind('command+s', () => {
