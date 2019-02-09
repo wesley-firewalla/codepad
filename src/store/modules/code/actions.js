@@ -80,7 +80,12 @@ export default {
       }
     }
   },
-  async saveTab({ state }, tab) {
+  async saveActiveTab({ state }, title) {
+    let tab = state.active_tab
+    if (!_.isUndefined(title)) {
+      tab.title = title
+    }
+
     tab.origin = tab.code
     if (tab.id) {
       await itemService.update(tab.id, tab)
@@ -88,9 +93,9 @@ export default {
       const sItem = state.items.find(it => it.id === item.id)
       _.assign(sItem, item)
 
-      const tab = state.tabs.find(it => it.id === item.id)
+      tab = state.tabs.find(it => it.id === item.id)
       if (tab) {
-        tab.name = item.name
+        tab.title = item.title
         tab.language = item.language
         tab.code = item.code
       }
@@ -99,13 +104,6 @@ export default {
       const item = await itemService.findById(tab.id)
       state.items.splice(0, 0, item)
     }
-  },
-  async saveActiveTab({ dispatch, state }, title) {
-    if (!_.isUndefined(title)) {
-      state.active_tab.title = title
-    }
-
-    await dispatch('saveTab', state.active_tab)
   },
   setActiveTabCode({ state }, code) {
     const tab = state.active_tab

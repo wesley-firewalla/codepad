@@ -84,6 +84,10 @@ export default {
     }
     this.fetchItems()
     this.initShortcuts()
+
+    this.$on('test', function(msg) {
+      console.log(msg)
+    })
   },
   destroyed() {
     Mousetrap.unbind('command+s')

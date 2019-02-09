@@ -50,9 +50,7 @@ export default {
       },
       set(value) {
         this.setActiveTabCode(value)
-        this.$nextTick(() => {
-          this.$forceUpdate()
-        })
+        this.$emit('test', 'hi')
       }
     }
   },
