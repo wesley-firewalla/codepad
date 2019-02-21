@@ -1,5 +1,9 @@
 # CodePad
 
+## Preview
+
+![Preview](./preview.png)
+
 ## Run
 
 ```bash
